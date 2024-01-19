@@ -72,12 +72,25 @@ app.put('/books/:id',async(req,res)=>{
       if(!result){
         return res.status(404).json({message:'Book not found'})
       }
+      
       return res.status(200).send({message:'Book updated successfully'})
     }catch(error){
         console.log(error.message)
         res.status(500).send({message:error.message})
     }
 })
+
+
+app.delete('/books/:id', async (req,res)=>{
+    try{
+        const {id} = req.params
+await Book.findByIdAndDelete(id)
+return res.status(200).send({message:"Book deleted successfully"})
+    }catch(error){
+        console.log(error.message)
+    }
+})
+
 
 mongoose.connect(mongoDBURL).then(()=>{
     console.log("App connected to database")
